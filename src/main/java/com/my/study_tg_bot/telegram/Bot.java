@@ -1,5 +1,6 @@
 package com.my.study_tg_bot.telegram;
 
+import com.my.study_tg_bot.service.UpdateDispatcher;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,18 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 public class Bot extends TelegramWebhookBot {
 
     final TelegramProperties telegramProperties;
+    final UpdateDispatcher updateDispatcher;
 
     @Autowired
-    public Bot(TelegramProperties telegramProperties) {
+    public Bot(TelegramProperties telegramProperties, UpdateDispatcher updateDispatcher) {
         super(telegramProperties.getToken());
         this.telegramProperties = telegramProperties;
+        this.updateDispatcher = updateDispatcher;
     }
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
-        return null;
+        return updateDispatcher.distribute(update, this);
     }
 
     @Override

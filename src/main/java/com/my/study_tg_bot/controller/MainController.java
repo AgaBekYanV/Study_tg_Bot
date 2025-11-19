@@ -30,24 +30,14 @@ public class MainController {
 
     @PostMapping("/")
     public BotApiMethod<?> listener(@RequestBody Update update){
-        Message message = update.getMessage();
-        if(update.hasMessage()){
-            if(message.hasPhoto()){
-                return SendMessage.builder()
-                        .chatId(message.getChatId())
-                        .text("It's a photo")
-                        .build();
-            }
-            return echo(update.getMessage());
-        }
         return bot.onWebhookUpdateReceived(update);
     }
 
-    private BotApiMethod<?> echo(Message message) {
-        System.out.println(message.getText());
-        return SendMessage.builder()
-                .chatId(message.getChatId())
-                .text(message.getText())
-                .build();
-    }
+//    private BotApiMethod<?> echo(Message message) {
+//        System.out.println(message.getText());
+//        return SendMessage.builder()
+//                .chatId(message.getChatId())
+//                .text(message.getText())
+//                .build();
+//    }
 }
