@@ -22,8 +22,10 @@ public class CallbackQueryHandler {
     final FeedbackManager feedbackManager;
 
     @Autowired
-    public CallbackQueryHandler(HelpManager helpManager,
-                                FeedbackManager feedbackManager) {
+    public CallbackQueryHandler(
+            HelpManager helpManager,
+            FeedbackManager feedbackManager
+    ) {
         this.helpManager = helpManager;
         this.feedbackManager = feedbackManager;
     }

@@ -39,6 +39,7 @@ public class UpdateDispatcher {
             Message message = update.getMessage();
             if(message.hasText()) {
                 if (message.getText().charAt(0) == '/') {
+                    String text = message.getText();
                     return commandHandler.answer(message, bot);
                 }
             }
