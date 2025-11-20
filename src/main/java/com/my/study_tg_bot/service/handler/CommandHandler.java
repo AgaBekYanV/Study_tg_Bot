@@ -1,6 +1,8 @@
 package com.my.study_tg_bot.service.handler;
 
 import com.my.study_tg_bot.service.factory.KeyboardFactory;
+import com.my.study_tg_bot.service.manager.FeedbackManager;
+import com.my.study_tg_bot.service.manager.HelpManager;
 import com.my.study_tg_bot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -12,6 +14,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.List;
 
+import static com.my.study_tg_bot.service.data.CallbackData.FEEDBACK;
+import static com.my.study_tg_bot.service.data.CallbackData.HELP;
 import static com.my.study_tg_bot.service.data.Command.*;
 
 
@@ -19,44 +23,34 @@ import static com.my.study_tg_bot.service.data.Command.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CommandHandler {
     final KeyboardFactory keyboardFactory;
+    final FeedbackManager  feedbackManager;
+    final HelpManager helpManager;
 
     @Autowired
-    public CommandHandler(KeyboardFactory keyboardFactory) {
+    public CommandHandler(KeyboardFactory keyboardFactory, FeedbackManager feedbackManager, HelpManager helpManager) {
         this.keyboardFactory = keyboardFactory;
+        this.feedbackManager = feedbackManager;
+        this.helpManager = helpManager;
     }
 
     public BotApiMethod<?> answer(Message message, Bot bot){
         String command = message.getText();
         switch(command){
             case START -> { return start(message); }
-            case FEEDBACK -> { return feedback(message); }
-            case HELP -> { return help(message); }
+            case FEEDBACK_COMMAND -> { return feedbackManager.answerCommand(message); }
+            case HELP_COMMAND -> { return helpManager.answerCommand(message); }
+            default -> {defaultAnswer(message);}
         }
         return null;
     }
 
-    private BotApiMethod<?> help(Message message) {
+    private BotApiMethod<?> defaultAnswer(Message message) {
         return SendMessage.builder()
                 .chatId(message.getChatId())
-                .text("""
-                        📍 Доступные функции:
-                        - Расписание
-                        - Домашнее задание
-                        - Контроль успеваемости
-                        """)
+                .text("Команда \"" + message.getText() + "\" не поддерживается")
                 .build();
     }
 
-    private BotApiMethod<?> feedback(Message message) {
-        return SendMessage.builder()
-                .chatId(message.getChatId())
-                .text("""
-                        📍 Ссылки для обратной связи
-                        GitHub - https://github.com/AgaBekYanV
-                        Telegram - https://t.me/slavavyaceslavu
-                        """)
-                .build();
-    }
 
     private BotApiMethod<?> start(Message message){
         return SendMessage.builder()
@@ -64,7 +58,7 @@ public class CommandHandler {
                 .replyMarkup(keyboardFactory.getInlineKeyboardMarkup(
                         List.of("Помощь", "Обратная связь"),
                         List.of(2),
-                        List.of("help","feedback")
+                        List.of(HELP,FEEDBACK)
                 ))
                 .text("""
                         🖖Приветствую в Study Helper Bot, инструменте для упрощения взаимодействия репититора и ученика.
