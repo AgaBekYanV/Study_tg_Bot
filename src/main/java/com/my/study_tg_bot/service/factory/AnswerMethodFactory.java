@@ -1,5 +1,6 @@
 package com.my.study_tg_bot.service.factory;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
@@ -9,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 @Component
+@Slf4j
 public class AnswerMethodFactory {
 
     public SendMessage getSendMessage(
@@ -16,6 +18,7 @@ public class AnswerMethodFactory {
             String text,
             ReplyKeyboard keyboard
     ){
+        log.info("Передаю каркас ответа на SendMessage.");
         return SendMessage.builder()
                 .chatId(chatId)
                 .text(text)
@@ -28,6 +31,7 @@ public class AnswerMethodFactory {
             String text,
             InlineKeyboardMarkup keyboard
     ){
+        log.info("Передаю каркас ответа на EditMessageText.");
         return EditMessageText.builder()
                 .chatId(callbackQuery.getMessage().getChatId())
                 .messageId(callbackQuery.getMessage().getMessageId())
@@ -38,6 +42,7 @@ public class AnswerMethodFactory {
     }
 
     public DeleteMessage getDeleteMessageText(Long chatId, Integer messageId){
+        log.info("Передаю каркас ответа на DeleteMessage.");
         return DeleteMessage.builder()
                 .chatId(chatId)
                 .messageId(messageId)

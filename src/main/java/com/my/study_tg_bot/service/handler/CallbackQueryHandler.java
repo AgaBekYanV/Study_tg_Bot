@@ -1,7 +1,7 @@
 package com.my.study_tg_bot.service.handler;
 
-import com.my.study_tg_bot.service.manager.FeedbackManager;
-import com.my.study_tg_bot.service.manager.HelpManager;
+import com.my.study_tg_bot.service.manager.feedback.FeedbackManager;
+import com.my.study_tg_bot.service.manager.help.HelpManager;
 import com.my.study_tg_bot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -34,10 +34,10 @@ public class CallbackQueryHandler {
         String callbackData = callbackQuery.getData();
         switch(callbackData){
             case FEEDBACK -> {
-                return feedbackManager.answerCallbackQuery(callbackQuery);
+                return feedbackManager.answerCallbackQuery(callbackQuery, bot);
             }
             case HELP -> {
-                return helpManager.answerCallbackQuery(callbackQuery);
+                return helpManager.answerCallbackQuery(callbackQuery, bot);
             }
         }
         return null;

@@ -32,17 +32,22 @@ public class UpdateDispatcher {
     }
 
     public BotApiMethod <?> distribute(Update update, Bot bot) {
+        log.info("Распределение сообщений. UpdateDispatcher");
         if(update.hasCallbackQuery()){
             return callbackQueryHandler.answer(update.getCallbackQuery(),bot);
         }
         if(update.hasMessage()){
+            log.info("Распознал сообщение. UpdateDispatcher");
             Message message = update.getMessage();
             if(message.hasText()) {
+                log.info("Распознал текст. UpdateDispatcher");
                 if (message.getText().charAt(0) == '/') {
-                    String text = message.getText();
+                    log.info("Распознал команду. UpdateDispatcher");
+                    log.info("Обработка команды. UpdateDispatcher");
                     return commandHandler.answer(message, bot);
                 }
             }
+            log.info("Обработка сообщения. UpdateDispatcher");
             return messageHandler.answer(message, bot);
         }
         log.info("Unsupported update {}", update);

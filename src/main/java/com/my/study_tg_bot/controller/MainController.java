@@ -3,6 +3,7 @@ package com.my.study_tg_bot.controller;
 import com.my.study_tg_bot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @RestController
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
 public class MainController {
 
     final Bot bot;
@@ -25,6 +27,7 @@ public class MainController {
 
     @PostMapping("/")
     public BotApiMethod<?> listener(@RequestBody Update update){
+        log.info("Вызов метода listener");
         return bot.onWebhookUpdateReceived(update);
     }
 

@@ -3,6 +3,7 @@ package com.my.study_tg_bot.telegram;
 import com.my.study_tg_bot.service.UpdateDispatcher;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
@@ -11,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Slf4j
 public class Bot extends TelegramWebhookBot {
 
     final TelegramProperties telegramProperties;
@@ -25,6 +27,7 @@ public class Bot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+        log.info("Location: Bot.onWebhookUpdateReceived; Action: Webhook Update Received");
         return updateDispatcher.distribute(update, this);
     }
 

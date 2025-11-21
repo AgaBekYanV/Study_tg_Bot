@@ -1,5 +1,6 @@
 package com.my.study_tg_bot.service.factory;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 public class KeyboardFactory {
 
     public InlineKeyboardMarkup getInlineKeyboardMarkup(
@@ -18,6 +20,7 @@ public class KeyboardFactory {
             List<Integer> configuration,
             List<String> data
     ) {
+        log.info("Формирую клавиатуру InlineKeyboardMarkup");
         List<List<InlineKeyboardButton>> keyboard = new ArrayList<>();
         int index = 0;
         for (Integer rowNumber : configuration) {
@@ -40,6 +43,7 @@ public class KeyboardFactory {
            List<String> text,
            List<Integer> configuration
     ) {
+        log.info("Формирую клавиатуру ReplyKeyboardMarkup");
         List<KeyboardRow> keyboard = new ArrayList<>();
         int index = 0;
         for (Integer rowNumber : configuration) {
