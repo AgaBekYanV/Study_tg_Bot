@@ -2,6 +2,8 @@ package com.my.study_tg_bot.service.handler;
 
 import com.my.study_tg_bot.service.manager.feedback.FeedbackManager;
 import com.my.study_tg_bot.service.manager.help.HelpManager;
+import com.my.study_tg_bot.service.manager.task.TaskManager;
+import com.my.study_tg_bot.service.manager.timetable.TimetableManager;
 import com.my.study_tg_bot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -10,8 +12,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 
-import static com.my.study_tg_bot.service.data.CallbackData.FEEDBACK;
-import static com.my.study_tg_bot.service.data.CallbackData.HELP;
+import static com.my.study_tg_bot.service.data.CallbackData.*;
 
 
 @Service
@@ -20,18 +21,31 @@ public class CallbackQueryHandler {
 
     final HelpManager helpManager;
     final FeedbackManager feedbackManager;
+    final TimetableManager timetableManager;
+    final TaskManager taskManager;
 
     @Autowired
     public CallbackQueryHandler(
             HelpManager helpManager,
-            FeedbackManager feedbackManager
+            FeedbackManager feedbackManager,
+            TimetableManager timetableManager,
+            TaskManager taskManager
     ) {
         this.helpManager = helpManager;
         this.feedbackManager = feedbackManager;
+        this.timetableManager = timetableManager;
+        this.taskManager = taskManager;
     }
 
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot){
         String callbackData = callbackQuery.getData();
+        String keyWord = callbackData.split("_")[0];
+        if(TIMETABLE.equals(keyWord)){
+            return timetableManager.answerCallbackQuery(callbackQuery,bot);
+        }
+        if(TASK.equals(keyWord)){
+            return taskManager.answerCallbackQuery(callbackQuery,bot);
+        }
         switch(callbackData){
             case FEEDBACK -> {
                 return feedbackManager.answerCallbackQuery(callbackQuery, bot);
