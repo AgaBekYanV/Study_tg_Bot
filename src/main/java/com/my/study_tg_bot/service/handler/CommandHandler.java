@@ -3,6 +3,7 @@ package com.my.study_tg_bot.service.handler;
 import com.my.study_tg_bot.service.manager.def.DefaultManager;
 import com.my.study_tg_bot.service.manager.feedback.FeedbackManager;
 import com.my.study_tg_bot.service.manager.help.HelpManager;
+import com.my.study_tg_bot.service.manager.progress_control.ProgressControlManager;
 import com.my.study_tg_bot.service.manager.start.StartManager;
 import com.my.study_tg_bot.service.manager.task.TaskManager;
 import com.my.study_tg_bot.service.manager.timetable.TimetableManager;
@@ -29,6 +30,7 @@ public class CommandHandler {
     final StartManager startManager;
     final TimetableManager timetableManager;
     final TaskManager taskManager;
+    final ProgressControlManager progressControlManager;
 
     @Autowired
     public CommandHandler(
@@ -37,7 +39,8 @@ public class CommandHandler {
             DefaultManager defaultManager,
             StartManager startManager,
             TimetableManager timetableManager,
-            TaskManager taskManager
+            TaskManager taskManager,
+            ProgressControlManager progressControlManager
     ) {
         this.feedbackManager = feedbackManager;
         this.helpManager = helpManager;
@@ -45,6 +48,7 @@ public class CommandHandler {
         this.startManager = startManager;
         this.timetableManager = timetableManager;
         this.taskManager = taskManager;
+        this.progressControlManager = progressControlManager;
     }
 
     public BotApiMethod<?> answer(Message message, Bot bot){
@@ -56,6 +60,7 @@ public class CommandHandler {
             case HELP_COMMAND -> { return helpManager.answerCommand(message, bot); }
             case TIMETABLE -> { return timetableManager.answerCommand(message, bot); }
             case TASK -> { return taskManager.answerCommand(message, bot); }
+            case PROGRESS -> { return progressControlManager.answerCommand(message, bot); }
             default -> {return defaultManager.answerCommand(message, bot);}
         }
     }
