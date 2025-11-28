@@ -1,6 +1,6 @@
 package com.my.study_tg_bot.service;
 
-import com.my.study_tg_bot.entity.User;
+import com.my.study_tg_bot.entity.user.User;
 import com.my.study_tg_bot.repository.UserRepository;
 import com.my.study_tg_bot.service.handler.CallbackQueryHandler;
 import com.my.study_tg_bot.service.handler.CommandHandler;
@@ -23,7 +23,6 @@ public class UpdateDispatcher {
     final MessageHandler messageHandler;
     final CommandHandler commandHandler;
     final CallbackQueryHandler callbackQueryHandler;
-    final UserRepository userRepository;
 
     @Autowired
     public UpdateDispatcher(
@@ -35,7 +34,6 @@ public class UpdateDispatcher {
         this.messageHandler = messageHandler;
         this.commandHandler = commandHandler;
         this.callbackQueryHandler = callbackQueryHandler;
-        this.userRepository = userRepository;
     }
 
     public BotApiMethod <?> distribute(Update update, Bot bot) {
@@ -48,10 +46,6 @@ public class UpdateDispatcher {
             Message message = update.getMessage();
             if(message.hasText()) {
                 log.info("Распознал текст. UpdateDispatcher");
-                log.info("Записываю chatId пользователя в бд {}. UpdateDispatcher", message.getChatId());
-                userRepository.save(User.builder()
-                        .chatId(message.getChatId())
-                        .build());
                 if (message.getText().charAt(0) == '/') {
                     log.info("Распознал команду. UpdateDispatcher");
                     log.info("Обработка команды. UpdateDispatcher");
