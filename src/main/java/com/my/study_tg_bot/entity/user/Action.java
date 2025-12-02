@@ -1,5 +1,6 @@
 package com.my.study_tg_bot.entity.user;
 
 public enum Action {
-    FREE;
+    FREE,
+    AUTH;
 }

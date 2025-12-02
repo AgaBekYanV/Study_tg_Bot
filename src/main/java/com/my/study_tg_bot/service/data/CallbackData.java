@@ -15,4 +15,8 @@ public class CallbackData {
 
     public static final String PROGRESS = "progress";
     public static final String PROGRESS_STAT = "progress_stat";
+
+    public static final String AUTH = "auth";
+    public static final String AUTH_TEACHER = "auth_teacher";
+    public static final String AUTH_STUDENT = "auth_student";
 }

@@ -14,6 +14,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.User;
@@ -24,6 +25,7 @@ import java.time.LocalDate;
 @Component
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Order(10)
 public class UserCreationAspect {
 
     final UserRepository userRepository;
@@ -42,8 +44,7 @@ public class UserCreationAspect {
     @Around("distributeMethodPointcut()")
     public Object distributeMethodAdvice(ProceedingJoinPoint joinPoint) throws Throwable{
         log.info("Я в аспект классе");
-        Object[] args = joinPoint.getArgs();
-        Update update = (Update) args[0];
+        Update update = (Update) joinPoint.getArgs()[0];
         User telegramUser;
         if(update.hasMessage()){
             log.info("Передано сообщение");
@@ -80,7 +81,7 @@ public class UserCreationAspect {
         com.my.study_tg_bot.entity.user.User newUser = com.my.study_tg_bot.entity.user.User.builder()
                 .chatId(telegramUser.getId())
                 .action(Action.FREE)
-                .role(Role.USER)
+                .role(Role.EMPTY)
                 .userDetails(userDetails)
                 .build();
 
