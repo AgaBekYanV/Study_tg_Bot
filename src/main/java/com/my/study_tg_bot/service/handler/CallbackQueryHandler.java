@@ -3,7 +3,9 @@ package com.my.study_tg_bot.service.handler;
 import com.my.study_tg_bot.service.manager.auth.AuthManager;
 import com.my.study_tg_bot.service.manager.feedback.FeedbackManager;
 import com.my.study_tg_bot.service.manager.help.HelpManager;
+import com.my.study_tg_bot.service.manager.profile.ProfileManager;
 import com.my.study_tg_bot.service.manager.progress_control.ProgressControlManager;
+import com.my.study_tg_bot.service.manager.search.SearchManager;
 import com.my.study_tg_bot.service.manager.task.TaskManager;
 import com.my.study_tg_bot.service.manager.timetable.TimetableManager;
 import com.my.study_tg_bot.telegram.Bot;
@@ -27,6 +29,8 @@ public class CallbackQueryHandler {
     final TaskManager taskManager;
     final ProgressControlManager progressControlManager;
     final AuthManager authManager;
+    final ProfileManager profileManager;
+    final SearchManager searchManager;
 
     @Autowired
     public CallbackQueryHandler(
@@ -35,7 +39,9 @@ public class CallbackQueryHandler {
             TimetableManager timetableManager,
             TaskManager taskManager,
             ProgressControlManager progressControlManager,
-            AuthManager authManager
+            AuthManager authManager,
+            ProfileManager profileManager,
+            SearchManager searchManager
     ) {
         this.helpManager = helpManager;
         this.feedbackManager = feedbackManager;
@@ -43,22 +49,20 @@ public class CallbackQueryHandler {
         this.taskManager = taskManager;
         this.progressControlManager = progressControlManager;
         this.authManager = authManager;
+        this.profileManager = profileManager;
+        this.searchManager = searchManager;
     }
 
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot){
         String callbackData = callbackQuery.getData();
         String keyWord = callbackData.split("_")[0];
-        if(TIMETABLE.equals(keyWord)){
-            return timetableManager.answerCallbackQuery(callbackQuery,bot);
-        }
-        if(TASK.equals(keyWord)){
-            return taskManager.answerCallbackQuery(callbackQuery,bot);
-        }
-        if(PROGRESS.equals(keyWord)){
-            return progressControlManager.answerCallbackQuery(callbackQuery,bot);
-        }
-        if(AUTH.equals(keyWord)){
-            return authManager.answerCallbackQuery(callbackQuery,bot);
+        switch (keyWord){
+            case TIMETABLE -> {return timetableManager.answerCallbackQuery(callbackQuery,bot);}
+            case TASK -> { return taskManager.answerCallbackQuery(callbackQuery,bot);}
+            case PROGRESS -> { return progressControlManager.answerCallbackQuery(callbackQuery,bot);}
+            case AUTH -> {return authManager.answerCallbackQuery(callbackQuery,bot);}
+            case PROFILE -> {return profileManager.answerCallbackQuery(callbackQuery,bot);}
+            case SEARCH -> {return searchManager.answerCallbackQuery(callbackQuery,bot);}
         }
         switch(callbackData){
             case FEEDBACK -> {

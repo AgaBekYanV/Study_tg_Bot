@@ -3,7 +3,9 @@ package com.my.study_tg_bot.service.handler;
 import com.my.study_tg_bot.service.manager.def.DefaultManager;
 import com.my.study_tg_bot.service.manager.feedback.FeedbackManager;
 import com.my.study_tg_bot.service.manager.help.HelpManager;
+import com.my.study_tg_bot.service.manager.profile.ProfileManager;
 import com.my.study_tg_bot.service.manager.progress_control.ProgressControlManager;
+import com.my.study_tg_bot.service.manager.search.SearchManager;
 import com.my.study_tg_bot.service.manager.start.StartManager;
 import com.my.study_tg_bot.service.manager.task.TaskManager;
 import com.my.study_tg_bot.service.manager.timetable.TimetableManager;
@@ -31,6 +33,8 @@ public class CommandHandler {
     final TimetableManager timetableManager;
     final TaskManager taskManager;
     final ProgressControlManager progressControlManager;
+    final ProfileManager profileManager;
+    final SearchManager searchManager;
 
     @Autowired
     public CommandHandler(
@@ -40,7 +44,9 @@ public class CommandHandler {
             StartManager startManager,
             TimetableManager timetableManager,
             TaskManager taskManager,
-            ProgressControlManager progressControlManager
+            ProgressControlManager progressControlManager,
+            ProfileManager profileManager,
+            SearchManager searchManager
     ) {
         this.feedbackManager = feedbackManager;
         this.helpManager = helpManager;
@@ -49,6 +55,8 @@ public class CommandHandler {
         this.timetableManager = timetableManager;
         this.taskManager = taskManager;
         this.progressControlManager = progressControlManager;
+        this.profileManager = profileManager;
+        this.searchManager = searchManager;
     }
 
     public BotApiMethod<?> answer(Message message, Bot bot){
@@ -61,6 +69,8 @@ public class CommandHandler {
             case TIMETABLE -> { return timetableManager.answerCommand(message, bot); }
             case TASK -> { return taskManager.answerCommand(message, bot); }
             case PROGRESS -> { return progressControlManager.answerCommand(message, bot); }
+            case PROFILE -> {return profileManager.answerCommand(message,bot);}
+            case SEARCH -> {return searchManager.answerCommand(message,bot);}
             default -> {return defaultManager.answerCommand(message, bot);}
         }
     }

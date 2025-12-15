@@ -1,6 +1,5 @@
 package com.my.study_tg_bot.service;
 
-import com.my.study_tg_bot.entity.user.User;
 import com.my.study_tg_bot.repository.UserRepository;
 import com.my.study_tg_bot.service.handler.CallbackQueryHandler;
 import com.my.study_tg_bot.service.handler.CommandHandler;

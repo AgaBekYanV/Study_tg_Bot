@@ -39,7 +39,7 @@ public class FeedbackManager extends AbstractManager {
 
 
     @Override
-    public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
+    public BotApiMethod<?>  answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
         log.info("CallbackQuery feedback");
         return answerMethodFactory.getEditMessageText(
                 callbackQuery,
