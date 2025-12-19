@@ -10,6 +10,25 @@ public class CallbackData {
     public static final String TIMETABLE_ADD = "timetable_add";
     public static final String TIMETABLE_REMOVE = "timetable_remove";
 
+    //Day of week
+    public static final String TIMETABLE_1 = "timetable_1"; //Monday
+    public static final String TIMETABLE_2 = "timetable_2"; //Tuesday
+    public static final String TIMETABLE_3 = "timetable_3"; //Wednesday
+    public static final String TIMETABLE_4 = "timetable_4"; //Thursday
+    public static final String TIMETABLE_5 = "timetable_5"; //Friday
+    public static final String TIMETABLE_6 = "timetable_6"; //Saturday
+    public static final String TIMETABLE_7 = "timetable_7"; //Sunday
+
+    //Day of week (ADD TASK)
+    public static final String WEEKDAY = "weekday";
+    public static final String TIMETABLE_ADD_WEEKDAY = "timetable_add_weekday_";
+    public static final String HOUR = "hour";
+    public static final String TIMETABLE_ADD_HOUR = "timetable_add_hour_";
+    public static final String MINUTE = "minute";
+    public static final String TIMETABLE_ADD_MINUTE = "timetable_add_minute_";
+    public static final String USER = "user";
+    public static final String TIMETABLE_ADD_USER = "timetable_add_user_";
+
     public static final String TASK = "task";
     public static final String TASK_CREATE = "task_create";
 
