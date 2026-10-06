@@ -2,6 +2,7 @@ package com.my.study_tg_bot.service.handler;
 
 import com.my.study_tg_bot.repository.UserRepository;
 import com.my.study_tg_bot.service.manager.search.SearchManager;
+import com.my.study_tg_bot.service.manager.timetable.TimetableManager;
 import com.my.study_tg_bot.telegram.Bot;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -16,12 +17,15 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 public class MessageHandler {
 
     final SearchManager searchManager;
+    final TimetableManager timetableManager;
     final UserRepository userRepository;
 
     @Autowired
     public MessageHandler(SearchManager searchManager,
+                          TimetableManager timetable,
                           UserRepository userRepository) {
         this.searchManager = searchManager;
+        this.timetableManager = timetable;
         this.userRepository = userRepository;
     }
 
@@ -29,6 +33,7 @@ public class MessageHandler {
         var user = userRepository.findUserByChatId(message.getChatId());
         switch (user.getAction()){
             case SEND_TOKEN -> { return searchManager.answerMessage(message, bot);}
+            case SENDING_DESCRIPTION, SENDING_TITLE -> { return timetableManager.answerMessage(message, bot);}
         }
         return null;
     }

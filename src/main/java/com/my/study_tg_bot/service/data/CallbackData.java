@@ -5,12 +5,30 @@ public class CallbackData {
     public static final String FEEDBACK = "feedback";
     public static final String HELP = "help";
 
+    //Timetable
     public static final String TIMETABLE = "timetable";
     public static final String TIMETABLE_SHOW = "timetable_show";
-    public static final String TIMETABLE_ADD = "timetable_add";
     public static final String TIMETABLE_REMOVE = "timetable_remove";
+    public static final String TIMETABLE_REMOVE_WEEKDAY = "timetable_remove_weekday_";
+    public static final String TIMETABLE_REMOVE_POS = "timetable_remove_pos_";
+    public static final String TIMETABLE_REMOVE_FINAL = "timetable_remove_final_";
+    public static final String FINAL = "final";
+    public static final String POS = "pos";
+    public static final String TIMETABLE_BACK = "timetable_back_";
+    public static final String BACK = "back";
+    public static final String REMOVE = "remove";
 
-    //Day of week
+
+    //Timetable_add
+    public static final String TIMETABLE_ADD = "timetable_add";
+    public static final String TIMETABLE_ADD_WEEKDAY = "timetable_add_weekday_";
+    public static final String TIMETABLE_ADD_HOUR = "timetable_add_hour_";
+    public static final String TIMETABLE_ADD_MINUTE = "timetable_add_minute_";
+    public static final String TIMETABLE_ADD_USER = "timetable_add_user_";
+    public static final String TIMETABLE_ADD_TITLE = "timetable_add_title_";
+    public static final String TIMETABLE_ADD_DESCRIPTION = "timetable_add_description_";
+
+    //Дни недели
     public static final String TIMETABLE_1 = "timetable_1"; //Monday
     public static final String TIMETABLE_2 = "timetable_2"; //Tuesday
     public static final String TIMETABLE_3 = "timetable_3"; //Wednesday
@@ -19,29 +37,37 @@ public class CallbackData {
     public static final String TIMETABLE_6 = "timetable_6"; //Saturday
     public static final String TIMETABLE_7 = "timetable_7"; //Sunday
 
-    //Day of week (ADD TASK)
-    public static final String WEEKDAY = "weekday";
-    public static final String TIMETABLE_ADD_WEEKDAY = "timetable_add_weekday_";
-    public static final String HOUR = "hour";
-    public static final String TIMETABLE_ADD_HOUR = "timetable_add_hour_";
-    public static final String MINUTE = "minute";
-    public static final String TIMETABLE_ADD_MINUTE = "timetable_add_minute_";
-    public static final String USER = "user";
-    public static final String TIMETABLE_ADD_USER = "timetable_add_user_";
 
+    public static final String WEEKDAY = "weekday";
+    public static final String HOUR = "hour";
+    public static final String MINUTE = "minute";
+
+    public static final String USER = "user";
+
+    public static final String TITLE = "title";
+    public static final String DESCRIPTION = "description";
+
+    public static final String TIMETABLE_FINISH = "timetable_finish_";
+    public static final String FINISH = "finish";
+
+    //Task
     public static final String TASK = "task";
     public static final String TASK_CREATE = "task_create";
 
+    //Progress
     public static final String PROGRESS = "progress";
     public static final String PROGRESS_STAT = "progress_stat";
 
+    //AUTH
     public static final String AUTH = "auth";
     public static final String AUTH_TEACHER = "auth_teacher";
     public static final String AUTH_STUDENT = "auth_student";
 
+    //SEARCH
     public static final String SEARCH = "search";
     public static final String SEARCH_CANCEL = "search_cancel";
 
+    //PROFILE
     public static final String PROFILE = "profile";
     public static final String PROFILE_REFRESH_TOKEN = "profile_refresh_token";
 }

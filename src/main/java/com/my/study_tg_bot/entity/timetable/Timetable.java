@@ -30,6 +30,9 @@ public class Timetable {
     @Column(name = "description")
     String description;
 
+    @Column(name = "in_creation")
+    boolean inCreation;
+
     @Enumerated(EnumType.STRING)
     WeekDay weekDay;
 
