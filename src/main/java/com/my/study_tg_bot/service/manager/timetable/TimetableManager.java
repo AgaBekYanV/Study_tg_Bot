@@ -39,7 +39,6 @@ public class TimetableManager extends AbstractManager {
     final UserRepository userRepository;
     final UserDetailsRepository userDetailsRepository;
     final TimetableRepository timetableRepository;
-    private final Bot bot;
 
 
     @Autowired
@@ -47,14 +46,13 @@ public class TimetableManager extends AbstractManager {
                             KeyboardFactory keyboardFactory,
                             UserRepository userRepository,
                             UserDetailsRepository userDetailsRepository,
-                            TimetableRepository timetableRepository,
-                            Bot bot) {
+                            TimetableRepository timetableRepository
+    ) {
         this.answerMethodFactory = answerMethodFactory;
         this.keyboardFactory = keyboardFactory;
         this.userRepository = userRepository;
         this.userDetailsRepository = userDetailsRepository;
         this.timetableRepository = timetableRepository;
-        this.bot = bot;
     }
 
     @Override
