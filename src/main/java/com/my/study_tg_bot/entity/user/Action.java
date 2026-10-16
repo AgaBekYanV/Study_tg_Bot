@@ -6,5 +6,7 @@ public enum Action {
     SENDING_TITLE,
     SENDING_DESCRIPTION,
     SENDING_TASK,
+    SENDING_TEXT,
+    SENDING_MEDIA,
     AUTH;
 }
