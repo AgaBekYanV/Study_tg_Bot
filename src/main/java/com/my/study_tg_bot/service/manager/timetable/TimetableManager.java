@@ -176,7 +176,7 @@ public class TimetableManager extends AbstractManager {
                 """
                         Вы уверены, что хотите удалить запись из расписания?""",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Да", "Нет"),
+                        List.of("✅ Да", "❌ Нет"),
                         List.of(2),
                         List.of(TIMETABLE_REMOVE_FINAL + splitCallbackData[3],
                                 TIMETABLE_REMOVE_WEEKDAY + splitCallbackData[4])
@@ -197,9 +197,10 @@ public class TimetableManager extends AbstractManager {
         List <String> data = new ArrayList<>();
         List <String> text = new ArrayList<>();
         List <Integer> cfg = new ArrayList<>();
-        for(Timetable timetable: timetableRepository.findAllByUsersContainingAndWeekDay(
+        for(Timetable timetable: timetableRepository.findAllByUsersContainingAndWeekDayAndInCreation(
                 userRepository.findUserByChatId(callbackQuery.getMessage().getChatId()),
-                weekDay
+                weekDay,
+                false
         )){
             data.add(TIMETABLE_REMOVE_POS + timetable.getId() + "_" + number);
             text.add(timetable.getTitle() + " " + timetable.getHour() + ":" + timetable.getMinute() +
@@ -316,7 +317,7 @@ public class TimetableManager extends AbstractManager {
             keyboardFactory.getInlineKeyboardMarkup(
                     List.of("Пн", "Вт", "Ср", "Чт",
                             "Пт", "Сб", "Вс",
-                            "\uD83D\uDD19Назад"),
+                            "\uD83D\uDD19 Назад"),
                     List.of(7,1),
                     data
             )
@@ -335,7 +336,7 @@ public class TimetableManager extends AbstractManager {
                     ✂️ Выберете день""",
             keyboardFactory.getInlineKeyboardMarkup(
                     List.of("Пн", "Вт", "Ср", "Чт",
-                            "Пт", "Сб", "Вс","\uD83D\uDD19Назад"),
+                            "Пт", "Сб", "Вс","\uD83D\uDD19 Назад"),
                     List.of(7, 1),
                     data
             )
@@ -352,7 +353,7 @@ public class TimetableManager extends AbstractManager {
             case "6" -> {weekDay = WeekDay.SATURDAY;}
             case "7" -> {weekDay = WeekDay.SUNDAY;}
         }
-        List<Timetable> timetableList = timetableRepository.findAllByUsersContainingAndWeekDay(user, weekDay);
+        List<Timetable> timetableList = timetableRepository.findAllByUsersContainingAndWeekDayAndInCreation(user, weekDay, false);
         StringBuilder text = new StringBuilder();
         if(timetableList == null || timetableList.isEmpty()){
             text.append("У вас нет занятий в этот день.");
@@ -374,7 +375,7 @@ public class TimetableManager extends AbstractManager {
                 callbackQuery,
                 text.toString(),
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(TIMETABLE_SHOW)
                 )
@@ -494,7 +495,7 @@ public class TimetableManager extends AbstractManager {
         }
         cfg.add(1);
         data.add(TIMETABLE_ADD_HOUR + timetable.getHour() + "_" + id);
-        text.add("Назад");
+        text.add("\uD83D\uDD19 Назад");
         timetableRepository.save(timetable);
 
         String messageText = "Выберите ученика";
@@ -596,7 +597,7 @@ public class TimetableManager extends AbstractManager {
                 callbackQuery,
                 "Введите заголовок: ",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(TIMETABLE_BACK + id)
                 )
@@ -616,7 +617,7 @@ public class TimetableManager extends AbstractManager {
                 callbackQuery,
                 "Введите описание: ",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(TIMETABLE_BACK + id)
                 )

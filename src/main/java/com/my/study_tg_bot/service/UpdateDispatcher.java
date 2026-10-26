@@ -27,8 +27,7 @@ public class UpdateDispatcher {
     public UpdateDispatcher(
             MessageHandler messageHandler,
             CommandHandler commandHandler,
-            CallbackQueryHandler callbackQueryHandler,
-            UserRepository userRepository
+            CallbackQueryHandler callbackQueryHandler
     ) {
         this.messageHandler = messageHandler;
         this.commandHandler = commandHandler;

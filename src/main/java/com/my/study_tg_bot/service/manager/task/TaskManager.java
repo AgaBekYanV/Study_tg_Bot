@@ -2,6 +2,7 @@ package com.my.study_tg_bot.service.manager.task;
 
 import com.my.study_tg_bot.entity.task.Task;
 import com.my.study_tg_bot.entity.user.Action;
+import com.my.study_tg_bot.entity.user.Role;
 import com.my.study_tg_bot.entity.user.User;
 import com.my.study_tg_bot.repository.TaskRepository;
 import com.my.study_tg_bot.repository.UserRepository;
@@ -54,6 +55,10 @@ public class TaskManager extends AbstractManager {
 
     @Override
     public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+        var user = userRepository.findUserByChatId(message.getChatId());
+        if(Role.STUDENT.equals(user.getRole())){
+            return null;
+        }
         return mainMenu(message);
     }
 
@@ -206,7 +211,7 @@ public class TaskManager extends AbstractManager {
             cfg.add(index);
         }
         data.add(TASK_MENU + id);
-        text.add("Назад");
+        text.add("\uD83D\uDD19 Назад");
         cfg.add(1);
         return answerMethodFactory.getEditMessageText(
                 callbackQuery,
@@ -231,7 +236,7 @@ public class TaskManager extends AbstractManager {
                         chatId,
                         task.getMessageId(),
                         keyboardFactory.getInlineKeyboardMarkup(
-                                List.of("Готово", "Затрудняюсь с ответом"),
+                                List.of("✅ Готово", "❌ Затрудняюсь с ответом"),
                                 List.of(1, 1),
                                 List.of(TASK_ANSWER_SUCCESS + id, TASK_ANSWER_FAIL + id)
                         )
@@ -240,7 +245,7 @@ public class TaskManager extends AbstractManager {
 
         bot.execute(answerMethodFactory.getAnswerCallbackQuery(
                 callbackQuery.getId(),
-                "Задание успешно отправлено"
+                "✅ Задание успешно отправлено"
         ));
 
         bot.execute(answerMethodFactory.getDeleteMessageText(
@@ -260,7 +265,7 @@ public class TaskManager extends AbstractManager {
           callbackQuery,
                 "Подтвердить, что хотите отправить задание выше ученику",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Да", "Нет"),
+                        List.of("✅ Да", "❌ Нет"),
                         List.of(2),
                         List.of(TASK_CREATE_CONFIRM + id, TASK_MENU + id)
                 )
@@ -275,7 +280,7 @@ public class TaskManager extends AbstractManager {
                     "Сообщение должно содержать один медиа файл (Фото, Видео, Документ или Аудио)\n\n" +
                             "И не должно содержать текста",
                     keyboardFactory.getInlineKeyboardMarkup(
-                            List.of("Назад"),
+                            List.of("\uD83D\uDD19 Назад"),
                             List.of(1),
                             List.of(TASK_MENU + task.getId())
                     )
@@ -310,7 +315,7 @@ public class TaskManager extends AbstractManager {
                     chatId,
                     "Сообщение должно содержать текст",
                     keyboardFactory.getInlineKeyboardMarkup(
-                            List.of("Назад"),
+                            List.of("\uD83D\uDD19 Назад"),
                             List.of(1),
                             List.of(TASK_MENU + task.getId())
                     )
@@ -352,7 +357,7 @@ public class TaskManager extends AbstractManager {
                 callbackQuery,
                 "Отправьте измененное Фото|Видео|Документ|Аудио",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(TASK_MENU + id)
                 ));
@@ -366,7 +371,7 @@ public class TaskManager extends AbstractManager {
                 callbackQuery,
                 "Отправьте измененный текст",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(TASK_MENU + id)
                 )
@@ -378,7 +383,7 @@ public class TaskManager extends AbstractManager {
                 callbackQuery,
                 "Настройте ваше задание, когда будете готовы- жмите \"Отправить\"",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Изменить текст", "Изменить медиа", "Выбрать ученика", "Отправить", "Отмена"),
+                        List.of("Изменить текст", "Изменить медиа", "Выбрать ученика", "Отправить", " \uD83D\uDEAB Отмена"),
                         List.of(2,1,2),
                         List.of(TASK_CREATE_TEXT + id, TASK_CREATE_MEDIA + id,
                                 TASK_CREATE_CHANGE_USER + id, TASK_CREATE_SEND + id,
@@ -396,7 +401,7 @@ public class TaskManager extends AbstractManager {
                 message.getChatId(),
                 "Настройте ваше задание, когда будете готовы- жмите \"Отправить\"",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Изменить текст", "Изменить медиа", "Выбрать ученика", "Отправить", "Отмена"),
+                        List.of("Изменить текст", "Изменить медиа", "Выбрать ученика", "Отправить", "\uD83D\uDEAB Отмена"),
                         List.of(2, 1, 2),
                         List.of(TASK_CREATE_TEXT + id, TASK_CREATE_MEDIA + id,
                                 TASK_CREATE_CHANGE_USER + id, TASK_CREATE_SEND + id,
@@ -441,7 +446,7 @@ public class TaskManager extends AbstractManager {
                 chatId,
                 "Настройте ваше задание, когда будете готовы- жмите \"Отправить\"",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Изменить текст", "Изменить медиа", "Выбрать ученика", "Отправить", "Отмена"),
+                        List.of("Изменить текст", "Изменить медиа", "Выбрать ученика", "Отправить", "\uD83D\uDEAB Отмена"),
                         List.of(2, 1, 2),
                         List.of(TASK_CREATE_TEXT + id, TASK_CREATE_MEDIA + id,
                                 TASK_CREATE_CHANGE_USER + id, TASK_CREATE_SEND + id,
@@ -469,7 +474,7 @@ public class TaskManager extends AbstractManager {
                 """
                         Отправьте задание одним сообщением, в дальнейшем, вы сможете его изменить""",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(TASK_CREATE)
                 )
@@ -522,7 +527,7 @@ public class TaskManager extends AbstractManager {
                 """
                       🗂 Вы можете добавить домашнее задание вашему ученику""",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Прикрепить домашнее задание"),
+                        List.of("\uD83D\uDCCE Прикрепить домашнее задание"),
                         List.of(1),
                         List.of(TASK_CREATE)
                 )
@@ -535,7 +540,7 @@ public class TaskManager extends AbstractManager {
                 """
                        🗂 Вы можете добавить домашнее задание вашему ученику""",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Прикрепить домашнее задание"),
+                        List.of("\uD83D\uDCCE Прикрепить домашнее задание"),
                         List.of(1),
                         List.of(TASK_CREATE)
                 )

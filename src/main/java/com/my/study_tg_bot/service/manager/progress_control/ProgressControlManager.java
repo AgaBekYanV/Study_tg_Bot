@@ -1,6 +1,7 @@
 package com.my.study_tg_bot.service.manager.progress_control;
 
 import com.my.study_tg_bot.entity.task.CompleteStatus;
+import com.my.study_tg_bot.entity.user.Role;
 import com.my.study_tg_bot.entity.user.User;
 import com.my.study_tg_bot.repository.TaskRepository;
 import com.my.study_tg_bot.repository.UserRepository;
@@ -44,6 +45,10 @@ public class ProgressControlManager extends AbstractManager {
 
     @Override
     public BotApiMethod<?> answerCommand(Message message, Bot bot) {
+        var user = userRepository.findUserByChatId(message.getChatId());
+        if(Role.STUDENT.equals(user.getRole())){
+            return null;
+        }
         return mainMenu(message);
     }
 
@@ -93,7 +98,7 @@ public class ProgressControlManager extends AbstractManager {
                 callbackQuery,
                 text.toString(),
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Назад"),
+                        List.of("\uD83D\uDD19 Назад"),
                         List.of(1),
                         List.of(PROGRESS_STAT)
                 )
@@ -109,7 +114,7 @@ public class ProgressControlManager extends AbstractManager {
                 """
                      Здесь вы можете увидеть""",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Статистика успеваемости"),
+                        List.of("\uD83D\uDCCA Статистика успеваемости"),
                         List.of(1),
                         List.of(PROGRESS_STAT)
                 )
@@ -122,7 +127,7 @@ public class ProgressControlManager extends AbstractManager {
                 """
                       Здесь вы можете увидеть""",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Статистика успеваемости"),
+                        List.of("\uD83D\uDCCA Статистика успеваемости"),
                         List.of(1),
                         List.of(PROGRESS_STAT)
                 )
@@ -150,11 +155,11 @@ public class ProgressControlManager extends AbstractManager {
             cfg.add(index);
         }
         data.add(PROGRESS);
-        text.add("Назад");
+        text.add("\uD83D\uDD19 Назад");
         cfg.add(1);
         return answerMethodFactory.getEditMessageText(
                 callbackQuery,
-                "Выберете ученика",
+                "\uD83D\uDC64 Выберете ученика",
                 keyboardFactory.getInlineKeyboardMarkup(
                         text,
                         cfg,

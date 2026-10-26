@@ -16,6 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.my.study_tg_bot.service.data.CallbackData.AUTH_STUDENT;
@@ -64,9 +65,37 @@ public class AuthManager extends AbstractManager {
         Long chatId = callbackQuery.getMessage().getChatId();
         Integer messageId = callbackQuery.getMessage().getMessageId();
         var user = userRepository.findById(chatId).orElseThrow();
+        HashMap<String, String> commands = new HashMap<>();
+        commands.put("start",  "Начни взаимодействовать с ботом");
+        commands.put("help",  "Перечень доступного функционала");
+        commands.put("search",  "Установить соединение");
+        commands.put("timetable",  "Расписание");
+        commands.put("profile",  "Личная информация");
         if (AUTH_TEACHER.equals(callbackQuery.getData())){
+            commands.put("task", "Добавить домашнее задание ученеку");
+            commands.put("progress", "Отслеживание успеваемости");
+            try {
+                bot.execute(
+                        answerMethodFactory.getBotCommandScopeChat(
+                                chatId,
+                                commands
+                        )
+                );
+            } catch (TelegramApiException e) {
+                log.error(e.getMessage());
+            }
             user.setRole(Role.TEACHER);
         } else {
+            try {
+                bot.execute(
+                        answerMethodFactory.getBotCommandScopeChat(
+                                chatId,
+                                commands
+                        )
+                );
+            } catch (TelegramApiException e) {
+                log.error(e.getMessage());
+            }
             user.setRole(Role.STUDENT);
         }
         user.setAction(Action.FREE);

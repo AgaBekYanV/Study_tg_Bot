@@ -3,18 +3,23 @@ package com.my.study_tg_bot.service.factory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery;
-import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.CopyMessage;
+import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
+import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
+import org.telegram.telegrambots.meta.api.objects.commands.scope.BotCommandScopeChat;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -105,6 +110,26 @@ public class AnswerMethodFactory {
                 .chatId(chatId)
                 .caption(caption)
                 .messageId(messageId)
+                .build();
+    }
+
+    public SetMyCommands getBotCommandScopeChat(Long chatId,
+                                                Map<String, String> commands) {
+        List<BotCommand> botCommands = new ArrayList<>();
+        for (String commandName : commands.keySet()) {
+            botCommands.add(
+                    BotCommand.builder()
+                            .command(commandName)
+                            .description(commands.get(commandName))
+                            .build()
+            );
+        }
+
+        return SetMyCommands.builder()
+                .scope(BotCommandScopeChat.builder()
+                        .chatId(chatId)
+                        .build())
+                .commands(botCommands)
                 .build();
     }
 

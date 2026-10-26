@@ -63,6 +63,21 @@ public class StartManager extends AbstractManager {
 
     @Override
     public BotApiMethod<?> answerCallbackQuery(CallbackQuery callbackQuery, Bot bot) {
-        return null;
+        return answerMethodFactory.getEditMessageText(
+                callbackQuery,
+                """
+                        🖖Приветствую в Study Helper Bot, инструменте для упрощения взаимодействия репититора и ученика.
+                                                
+                        Что бот умеет?
+                        📌 Составлять расписание
+                        📌 Прикреплять домашние задания
+                        📌 Ввести контроль успеваемости
+                        """,
+                keyboardFactory.getInlineKeyboardMarkup(
+                        List.of("Помощь", "Обратная связь"),
+                        List.of(2),
+                        List.of(HELP,FEEDBACK)
+                )
+        );
     }
 }

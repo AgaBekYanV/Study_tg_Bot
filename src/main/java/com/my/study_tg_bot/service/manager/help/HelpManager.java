@@ -38,10 +38,13 @@ public class HelpManager extends AbstractManager {
         return answerMethodFactory.getSendMessage(
                 message.getChatId(),
                 """
+                        📍 Доступные команды:
+                        Отображаются в панели "меню"
+                        
                         📍 Доступные функции:
-                        - Расписание
-                        - Домашнее задание
-                        - Контроль успеваемости
+                        - Расписание (/timetable)
+                        - Домашнее задание (/task)
+                        - Контроль успеваемости (/progress)
                         """,
                 keyboardFactory.getInlineKeyboardMarkup(
                         List.of("Главное меню"),
@@ -59,10 +62,13 @@ public class HelpManager extends AbstractManager {
         return answerMethodFactory.getEditMessageText(
                 callbackQuery,
                 """
+                        📍 Доступные команды:
+                        Отображаются в панели "меню"
+                        
                         📍 Доступные функции:
-                        - Расписание
-                        - Домашнее задание
-                        - Контроль успеваемости
+                        - Расписание (/timetable)
+                        - Домашнее задание (/task)
+                        - Контроль успеваемости (/progress)
                         """,
                 keyboardFactory.getInlineKeyboardMarkup(
                         List.of("\uD83D\uDD19 Назад"),

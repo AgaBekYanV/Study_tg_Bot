@@ -91,7 +91,7 @@ public class SearchManager extends AbstractManager {
                     message.getChatId(),
                     "По данному токену не найдено ни одного пользователя\n\nПовторите попытку!",
                     keyboardFactory.getInlineKeyboardMarkup(
-                            List.of("Отмена операции"),
+                            List.of("\uD83D\uDEAB Отмена операции"),
                             List.of(1),
                             List.of(SEARCH_CANCEL)
                     )
@@ -107,7 +107,7 @@ public class SearchManager extends AbstractManager {
             userRepository.save(user);
             userRepository.save(user2);
             return answerMethodFactory.getSendMessage(message.getChatId(),
-                    "Связь успешно установлена",
+                    "✅ Связь успешно установлена",
                     null
             );
         }
@@ -115,7 +115,7 @@ public class SearchManager extends AbstractManager {
                 message.getChatId(),
                 "Ошибка. Конфликт ролей. \n\nПовторите попытку!",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Отмена операции"),
+                        List.of("\uD83D\uDEAB Отмена операции"),
                         List.of(1),
                         List.of(SEARCH_CANCEL)
                 )
@@ -154,7 +154,7 @@ public class SearchManager extends AbstractManager {
                 chatId,
                 "Отправьте токен ",
                 keyboardFactory.getInlineKeyboardMarkup(
-                        List.of("Отмена"),
+                        List.of("\uD83D\uDEAB Отмена"),
                         List.of(1),
                         List.of(SEARCH_CANCEL)
                 )

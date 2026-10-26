@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface TimetableRepository extends JpaRepository<Timetable, UUID> {
 
-    List <Timetable> findAllByUsersContainingAndWeekDay(User user, WeekDay weekDay);
+    List <Timetable> findAllByUsersContainingAndWeekDayAndInCreation(User user, WeekDay weekDay, Boolean isInCreation);
 
     Timetable findTimetableById(UUID id); //18:58
 }

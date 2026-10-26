@@ -6,6 +6,7 @@ import com.my.study_tg_bot.service.manager.help.HelpManager;
 import com.my.study_tg_bot.service.manager.profile.ProfileManager;
 import com.my.study_tg_bot.service.manager.progress_control.ProgressControlManager;
 import com.my.study_tg_bot.service.manager.search.SearchManager;
+import com.my.study_tg_bot.service.manager.start.StartManager;
 import com.my.study_tg_bot.service.manager.task.TaskManager;
 import com.my.study_tg_bot.service.manager.timetable.TimetableManager;
 import com.my.study_tg_bot.telegram.Bot;
@@ -31,6 +32,7 @@ public class CallbackQueryHandler {
     final AuthManager authManager;
     final ProfileManager profileManager;
     final SearchManager searchManager;
+    final StartManager startManager;
 
     @Autowired
     public CallbackQueryHandler(
@@ -41,7 +43,8 @@ public class CallbackQueryHandler {
             ProgressControlManager progressControlManager,
             AuthManager authManager,
             ProfileManager profileManager,
-            SearchManager searchManager
+            SearchManager searchManager,
+            StartManager startManager
     ) {
         this.helpManager = helpManager;
         this.feedbackManager = feedbackManager;
@@ -51,12 +54,14 @@ public class CallbackQueryHandler {
         this.authManager = authManager;
         this.profileManager = profileManager;
         this.searchManager = searchManager;
+        this.startManager = startManager;
     }
 
     public BotApiMethod<?> answer(CallbackQuery callbackQuery, Bot bot){
         String callbackData = callbackQuery.getData();
         String keyWord = callbackData.split("_")[0];
         switch (keyWord){
+            case START -> {return startManager.answerCallbackQuery(callbackQuery, bot);}
             case TIMETABLE -> {return timetableManager.answerCallbackQuery(callbackQuery,bot);}
             case TASK -> { return taskManager.answerCallbackQuery(callbackQuery,bot);}
             case PROGRESS -> { return progressControlManager.answerCallbackQuery(callbackQuery,bot);}
