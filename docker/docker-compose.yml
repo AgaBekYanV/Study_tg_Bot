@@ -1,0 +1,55 @@
+name: study-telegram-bot
+
+
+services:
+  #DB
+  db:
+    image: postgres:latest
+    container_name: study_bot_db
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATASOURCE_NAME}
+      POSTGRES_USER: ${DATASOURCE_USERNAME}
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATASOURCE_USERNAME} -d ${DATASOURCE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - study-bot-network
+
+  # Spring Boot приложение
+  app:
+    build:
+      context: ..
+      dockerfile: Docker/Dockerfile
+    container_name: study_bot_app
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: ${DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - study-bot-network
+
+# Именованные тома для сохранения данных
+volumes:
+  pgdata:
+    driver: local
+
+# Сеть для связи между контейнерами
+networks:
+  study-bot-network:
+    driver: bridge

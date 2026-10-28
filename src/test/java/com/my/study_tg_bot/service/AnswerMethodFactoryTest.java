@@ -67,7 +67,6 @@ public class AnswerMethodFactoryTest {
                 .chatId(chatId)
                 .text(text)
                 .replyMarkup(keyboardMarkup)
-                .disableWebPagePreview(true)
                 .build();
 
 

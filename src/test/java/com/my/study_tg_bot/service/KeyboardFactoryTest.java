@@ -23,7 +23,7 @@ class KeyboardFactoryTest {
     }
 
     @Test
-    public void testGetInlineKeyboard() {
+    public void testGetInlineKeyboardMarkup() {
         // given
         List<String> text = List.of("Button 1", "Button 2", "Button 3");
         List<Integer> configuration = List.of(2, 2);
@@ -38,7 +38,7 @@ class KeyboardFactoryTest {
     }
 
     @Test
-    public void testGetReplyKeyboard() {
+    public void testGetReplyKeyboardMarkup() {
         // given
         List<String> text = List.of("Button 1", "Button 3");
         List<Integer> configuration = List.of(2, 1);

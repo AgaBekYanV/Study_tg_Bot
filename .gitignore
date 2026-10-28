@@ -35,3 +35,5 @@ build/
 .git
 src/main/resources/application.properties
 src/.env
+
+docker/.env
